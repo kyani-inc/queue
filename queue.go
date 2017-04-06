@@ -26,6 +26,10 @@ func SQS(secret, access, url, region string, messageTimeout int) Queue {
 	})
 }
 
+func SQSNoCreds(url, region string, messageTimeout int) Queue {
+	return sqs.NewNoCreds(url, region, messageTimeout)
+}
+
 func File(path string) Queue {
 	return file.New(path)
 }
