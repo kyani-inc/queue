@@ -29,6 +29,23 @@ func New(cfg Config) SQS {
 	return instance
 }
 
+// NewNoCreds returns an instance of SQS using default credentials, fall back to env...
+func NewNoCreds(url, region string, timeout int) SQS {
+	awsConfig := aws.Config{}
+	awsConfig.Region = aws.String(region)
+
+	session := session.New()
+	svc := sqs.New(session, &awsConfig)
+	return SQS{
+		sqsService: svc,
+		cfg: Config{
+			URL: url,
+			MessageTimeout: timeout,
+			Region: region,
+		},
+	}
+}
+
 // Next returns the next SQS message.
 func (instance SQS) Next(queue string) (messageID, result string, err error) {
 	params := &sqs.ReceiveMessageInput{
