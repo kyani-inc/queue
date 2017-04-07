@@ -41,6 +41,7 @@ func NewNoCreds(url, region string, timeout int) SQS {
 		cfg: Config{
 			URL: url,
 			MessageTimeout: timeout,
+			Region: region,
 		},
 	}
 }
