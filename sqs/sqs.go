@@ -29,7 +29,7 @@ func New(cfg Config) SQS {
 	return instance
 }
 
-// NewUseRole returns an instance of SQS using default credentials, fall back to env...
+// NewNoCreds returns an instance of SQS using default credentials, fall back to env...
 func NewNoCreds(url, region string, timeout int) SQS {
 	awsConfig := aws.Config{}
 	awsConfig.Region = aws.String(region)
