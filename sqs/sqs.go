@@ -39,11 +39,21 @@ func NewNoCreds(url, region string, timeout int) SQS {
 	return SQS{
 		sqsService: svc,
 		cfg: Config{
-			URL: url,
+			URL:            url,
 			MessageTimeout: timeout,
-			Region: region,
+			Region:         region,
 		},
 	}
+}
+
+// NewWithSession returns an instance of SQS using a passed session
+func NewWithSession(url, region string, timeout int, sess *session.Session) SQS {
+	awsConfig := aws.Config{}
+	awsConfig.Region = aws.String(region)
+
+	s := NewNoCreds(url, region, timeout)
+	s.sqsService = sqs.New(sess, &awsConfig)
+	return s
 }
 
 // Next returns the next SQS message.

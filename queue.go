@@ -1,6 +1,7 @@
 package queue
 
 import (
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/kyani-inc/queue/file"
 	"github.com/kyani-inc/queue/local"
 	"github.com/kyani-inc/queue/sqs"
@@ -28,6 +29,11 @@ func SQS(secret, access, url, region string, messageTimeout int) Queue {
 
 func SQSNoCreds(url, region string, messageTimeout int) Queue {
 	return sqs.NewNoCreds(url, region, messageTimeout)
+}
+
+// SQSWithSession returns an instance of SQS using a passed session
+func SQSWithSession(url, region string, timeout int, sess *session.Session) Queue {
+	return sqs.NewWithSession(url, region, timeout, sess)
 }
 
 func File(path string) Queue {
